@@ -1,23 +1,14 @@
-const express = require('express');
-const axios = require('axios');
-const app = express();
-const cors = require('cors'); // Importez le module cors
-
-app.use(cors());
-
-app.get('/fetch-rss', async (req, res) => {
-  try {
-    const response = await axios.get('http://javascript.developpez.com/index/rss', {
-      responseType: 'stream' // Indique à axios de retourner le contenu sous forme de flux
-    });
-
-    res.type('application/xml'); // Définit le type de contenu de la réponse comme XML
-    response.data.pipe(res); // Redirige le contenu reçu de la requête externe vers la réponse du serveur
-  } catch (error) {
-    res.status(500).send('Erreur lors de la récupération du flux RSS');
-  }
-});
-
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const cors_1 = __importDefault(require("cors"));
+const router_1 = __importDefault(require("./router"));
+const app = (0, express_1.default)();
+app.use((0, cors_1.default)());
+app.use(router_1.default);
 app.listen(3002, () => {
-  console.log('http://localhost:3002');
+    console.log('http://localhost:3002');
 });
